@@ -14,14 +14,9 @@
       background: #000;
       touch-action: manipulation;
     }
-
-    /* Giriş ekranı */
     #overlay {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      inset: 0;
       background: black;
       display: flex;
       justify-content: center;
@@ -29,24 +24,16 @@
       z-index: 1000;
       cursor: pointer;
     }
-
     #overlay h1 {
       color: white;
       font-size: 7vw;
-      text-shadow: 0 0 10px #fff, 0 0 20px #f0f, 0 0 30px #0ff;
+      text-shadow: 0 0 20px #fff, 0 0 40px #f0f, 0 0 60px #0ff;
       animation: glow 2s ease-in-out infinite alternate;
     }
-
     @keyframes glow {
-      from {
-        text-shadow: 0 0 10px #fff, 0 0 20px #f0f, 0 0 30px #0ff;
-      }
-      to {
-        text-shadow: 0 0 20px #ff00de, 0 0 30px #00ffff, 0 0 40px #ffffff;
-      }
+      from { text-shadow: 0 0 10px #fff, 0 0 20px #f0f, 0 0 30px #0ff;}
+      to { text-shadow: 0 0 38px #ff00de, 0 0 50px #00ffff, 0 0 60px #ffffff;}
     }
-
-    /* Video */
     #bg-video {
       position: fixed;
       top: 50%;
@@ -54,9 +41,9 @@
       transform: translate(-50%, -50%) rotate(90deg);
       width: 100vh;
       height: 100vw;
-      object-fit: contain;
-      background: black;
+      object-fit: cover;
       z-index: -1;
+      background: black;
       max-width: 100vw;
       max-height: 100vh;
       min-width: 100vw;
@@ -69,8 +56,6 @@
         transform: translate(-50%, -50%) rotate(0deg);
       }
     }
-
-    /* Kar efekti */
     .snowflake {
       position: fixed;
       top: -10px;
@@ -81,62 +66,50 @@
       animation: fall linear forwards;
       z-index: 10;
     }
-
     @keyframes fall {
-      to {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
+      to { transform: translateY(110vh); opacity: 0; }
     }
-
-    /* Kalpler */
     .heart {
       position: absolute;
       font-size: 28px;
-      color: white;
-      text-shadow: 0 0 10px #e75480, 0 0 20px #e75480;
+      color: #fff;
+      text-shadow: 0 0 18px #ff69b4, 0 0 25px #ff69b4;
       opacity: 0;
       animation: floatUp 6s linear forwards;
       z-index: 20;
     }
-
     @keyframes floatUp {
       0% { transform: translateY(100vh); opacity: 0; }
       20% { opacity: 1; }
       80% { opacity: 1; }
       100% { transform: translateY(-10vh); opacity: 0; }
     }
-
-    /* Yazılar */
     #title {
       position: absolute;
       top: 30%;
       left: 50%;
       transform: translateX(-50%);
-      color: white;
+      color: #fff;
       font-size: 8vw;
       font-style: italic;
-      text-shadow: 0 0 15px white, 0 0 30px white;
+      text-shadow: 0 0 18px #fff, 0 0 40px #fff;
       z-index: 5;
       text-align: center;
       width: 90vw;
     }
-
     #subtitle {
       position: absolute;
       top: 38%;
       left: 52%;
       transform: translateX(-50%);
-      color: white;
+      color: #fff;
       font-size: 4vw;
       font-style: italic;
-      text-shadow: 0 0 10px pink, 0 0 20px red;
+      text-shadow: 0 0 20px #ff69b4, 0 0 40px #ff69b4;
       z-index: 5;
       text-align: center;
       width: 90vw;
     }
-
-    /* Heart Button */
     #heart-btn {
       position: fixed;
       bottom: 6vh;
@@ -159,14 +132,12 @@
       position: relative;
       display: inline-block;
       animation: heartGlow 1.5s infinite alternate;
-      filter: drop-shadow(0 0 16px #ff69b4) drop-shadow(0 0 16px #fff);
+      filter: drop-shadow(0 0 20px #ff69b4) drop-shadow(0 0 18px #fff);
     }
     @keyframes heartGlow {
-      0% { filter: drop-shadow(0 0 8px #ff69b4) drop-shadow(0 0 4px #fff);}
-      100% { filter: drop-shadow(0 0 20px #ff69b4) drop-shadow(0 0 12px #fff);}
+      0% { filter: drop-shadow(0 0 12px #ff69b4) drop-shadow(0 0 6px #fff);}
+      100% { filter: drop-shadow(0 0 28px #ff69b4) drop-shadow(0 0 18px #fff);}
     }
-
-    /* Seviyorum Seni animasyonu */
     #love-message {
       position: fixed;
       left: 50%;
@@ -190,21 +161,10 @@
       animation: loveUp 2.5s cubic-bezier(.55,.06,.68,.19) forwards;
     }
     @keyframes loveUp {
-      0% {
-        bottom: -60px;
-        opacity: 0;
-      }
-      40% {
-        opacity: 1;
-        bottom: 15vh;
-      }
-      100% {
-        opacity: 1;
-        bottom: 28vh;
-      }
+      0% { bottom: -60px; opacity: 0;}
+      40% { opacity: 1; bottom: 16vh;}
+      100% { opacity: 1; bottom: 28vh;}
     }
-
-    /* Papatya */
     .daisy {
       position: absolute;
       width: 36px;
@@ -215,20 +175,10 @@
       animation: daisyExplode 1.4s forwards;
     }
     @keyframes daisyExplode {
-      0% {
-        opacity: 1;
-        transform: scale(0.5) translateY(0px);
-      }
-      70% {
-        opacity: 1;
-        transform: scale(1.2) translateY(-120px);
-      }
-      100% {
-        opacity: 0;
-        transform: scale(0.7) translateY(-160px);
-      }
+      0% {opacity: 1; transform: scale(0.5) translateY(0px);}
+      70% {opacity: 1; transform: scale(1.2) translateY(-120px);}
+      100% {opacity: 0; transform: scale(0.7) translateY(-160px);}
     }
-    /* Responsive yazılar */
     @media (max-width: 600px) {
       #title { font-size: 9vw; }
       #subtitle { font-size: 6vw; }
@@ -240,29 +190,20 @@
   </style>
 </head>
 <body>
-  <!-- Giriş ekranı -->
-  <div id="overlay">
-    <h1>Click Here</h1>
-  </div>
-
-  <!-- Video -->
+  <div id="overlay"><h1>Click Here</h1></div>
+  <!-- Video (dosyan varsa) -->
   <video autoplay muted loop id="bg-video">
     <source src="arkaplan.mp4" type="video/mp4">
   </video>
-
-  <!-- Müzik -->
+  <!-- Müzik (dosyan varsa) -->
   <audio id="bg-music" loop>
     <source src="sarki.mp3" type="audio/mpeg">
   </audio>
-
-  <!-- Yazılar -->
   <div id="title">Helin</div>
   <div id="subtitle">- Seni Seviyorum</div>
-
   <!-- Kalp Buton -->
   <button id="heart-btn" title="Tıkla!">
     <span class="heart-shape">
-      <!-- SVG ile parlak kalp -->
       <svg viewBox="0 0 32 29.6" width="100%" height="100%">
         <path d="M23.6,2.6c-2.6,0-5,1.7-6.1,4.2C16.1,4.3,13.7,2.6,11.1,2.6
         C6,2.6,2,6.7,2,11.8c0,7.1,13.4,15.2,14.3,15.7c0.4,0.2,0.9,0.2,1.3,0
@@ -271,19 +212,15 @@
       </svg>
     </span>
   </button>
-
   <!-- Seviyorum Seni yazısı -->
   <div id="love-message">Seviyorum Seni</div>
-
   <script>
-    // Giriş ekranı ve müzik
     const overlay = document.getElementById('overlay');
     const bgMusic = document.getElementById('bg-music');
     overlay.addEventListener('click', () => {
       overlay.style.display = 'none';
       bgMusic.play();
     });
-
     // Kar efekti
     function createSnowflake() {
       const snowflake = document.createElement('div');
@@ -293,11 +230,9 @@
       snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
       snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's';
       document.body.appendChild(snowflake);
-
       setTimeout(() => snowflake.remove(), 10000);
     }
     setInterval(createSnowflake, 300);
-
     // Kalpler - daha fazla
     function createHeart() {
       const heart = document.createElement('div');
@@ -306,11 +241,9 @@
       heart.style.left = Math.random() * 100 + 'vw';
       heart.style.fontSize = (Math.random() * 12 + 22) + 'px';
       document.body.appendChild(heart);
-
       setTimeout(() => heart.remove(), 6000);
     }
-    setInterval(createHeart, 900); // Daha sık: 900ms
-
+    setInterval(createHeart, 700); // Daha sık: 700ms
     // Glow efektli papatya SVG
     function getDaisySVG() {
       return `
@@ -336,45 +269,37 @@
       </svg>
       `;
     }
-
     // Papatya patlatma fonksiyonu
     function explodeDaisies(x, y) {
-      const daisyCount = 8;
+      const daisyCount = 10;
       for (let i = 0; i < daisyCount; i++) {
         const daisy = document.createElement('div');
         daisy.classList.add('daisy');
         daisy.innerHTML = getDaisySVG();
-        // Dağılım açısı ve mesafe
-        const angle = (2 * Math.PI / daisyCount) * i + Math.random() * 0.2;
-        const dx = Math.cos(angle) * (40 + Math.random() * 22);
-        const dy = Math.sin(angle) * (40 + Math.random() * 22);
-
+        const angle = (2 * Math.PI / daisyCount) * i + Math.random() * 0.3;
+        const dx = Math.cos(angle) * (55 + Math.random() * 20);
+        const dy = Math.sin(angle) * (55 + Math.random() * 15);
         daisy.style.left = (x - 18 + dx) + 'px';
         daisy.style.top = (y - 18 + dy) + 'px';
-
         document.body.appendChild(daisy);
         setTimeout(() => daisy.remove(), 1400);
       }
     }
-
     // Seviyorum Seni animasyonu fonksiyonu
     function showLoveMessage() {
       const msg = document.getElementById('love-message');
       msg.classList.add('show-love');
       setTimeout(() => msg.classList.remove('show-love'), 2600);
     }
-
     // Buton olayları
     const heartBtn = document.getElementById('heart-btn');
     heartBtn.addEventListener('click', function(e) {
       const rect = heartBtn.getBoundingClientRect();
-      // Butonun ortası
       const x = rect.left + rect.width / 2;
       const y = rect.top + rect.height / 2;
       explodeDaisies(x, y);
       showLoveMessage();
     });
-    // Mobil dokunma desteği
     heartBtn.addEventListener('touchstart', function(e) {
       const rect = heartBtn.getBoundingClientRect();
       const x = rect.left + rect.width / 2;
@@ -382,7 +307,6 @@
       explodeDaisies(x, y);
       showLoveMessage();
     });
-
     // Müzik otomatik başlatma için (mobilde overlay'den sonra)
     document.addEventListener('touchstart', () => {
       if (overlay.style.display === 'none') {
