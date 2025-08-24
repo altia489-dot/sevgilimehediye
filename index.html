@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <title>Helin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+      background: #000;
+      touch-action: manipulation;
+    }
+    #bg-video {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -2;
+      background: #000;
+    }
+    #main-content {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100vw; height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      pointer-events: none;
+    }
+    #title {
+      color: #fff;
+      font-size: 7vw;
+      font-style: italic;
+      text-shadow: 0 0 15px #fff, 0 0 30px #fff;
+      margin-bottom: 1vw;
+      pointer-events: none;
+    }
+    #subtitle {
+      color: #ff69b4;
+      font-size: 4vw;
+      font-style: italic;
+      text-shadow: 0 0 10px #ff69b4, 0 0 20px #fff;
+      pointer-events: none;
+    }
+    #heart-btn {
+      position: fixed;
+      bottom: 6vh;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 80px;
+      background: transparent;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: auto;
+    }
+    .heart-shape {
+      width: 60px;
+      height: 60px;
+      animation: heartGlow 1.5s infinite alternate;
+      filter: drop-shadow(0 0 20px #ff69b4) drop-shadow(0 0 18px #fff);
+    }
+    @keyframes heartGlow {
+      0% { filter: drop-shadow(0 0 12px #ff69b4) drop-shadow(0 0 6px #fff);}
+      100% { filter: drop-shadow(0 0 28px #ff69b4) drop-shadow(0 0 18px #fff);}
+    }
+    #love-message {
+      position: fixed;
+      left: 50%;
+      bottom: -60px;
+      transform: translateX(-50%);
+      font-size: 3vw;
+      color: #fff;
+      background: rgba(255, 105, 180, 0.8);
+      border-radius: 15px;
+      padding: 12px 28px;
+      box-shadow: 0 0 30px #ff69b4, 0 0 40px #fff;
+      text-align: center;
+      font-style: italic;
+      font-family: 'Arial', sans-serif;
+      opacity: 0;
+      z-index: 1000;
+      pointer-events: none;
+      animation: none;
+    }
+    .show-love {
+      animation: loveUp 2.5s cubic-bezier(.55,.06,.68,.19) forwards;
+    }
+    @keyframes loveUp {
+      0% { bottom: -60px; opacity: 0;}
+      40% { opacity: 1; bottom: 16vh;}
+      100% { opacity: 1; bottom: 28vh;}
+    }
+    /* Kar efekti */
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1em;
+      user-select: none;
+      pointer-events: none;
+      animation: fall linear forwards;
+      z-index: 10;
+    }
+    @keyframes fall {
+      to { transform: translateY(110vh); opacity: 0; }
+    }
+    /* Kalpler */
+    .heart {
+      position: absolute;
+      font-size: 28px;
+      color: #fff;
+      text-shadow: 0 0 18px #ff69b4, 0 0 25px #ff69b4;
+      opacity: 0;
+      animation: floatUp 6s linear forwards;
+      z-index: 20;
+      pointer-events: none;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(100vh); opacity: 0; }
+      20% { opacity: 1; }
+      80% { opacity: 1; }
+      100% { transform: translateY(-10vh); opacity: 0; }
+    }
+    /* Daisy */
+    .daisy {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      z-index: 2000;
+      pointer-events: none;
+      opacity: 1;
+      animation: daisyExplode 1.4s forwards;
+    }
+    @keyframes daisyExplode {
+      0% {opacity: 1; transform: scale(0.5) translateY(0px);}
+      70% {opacity: 1; transform: scale(1.2) translateY(-120px);}
+      100% {opacity: 0; transform: scale(0.7) translateY(-160px);}
+    }
+    @media (max-width: 600px) {
+      #title { font-size: 9vw; }
+      #subtitle { font-size: 6vw; }
+      #love-message { font-size: 5vw; padding: 10px 12px;}
+      #heart-btn { width: 60px; height: 60px; }
+      .heart-shape { width: 44px; height: 44px;}
+      .daisy { width: 26px; height: 26px;}
+    }
+  </style>
+</head>
+<body>
+  <video autoplay muted loop id="bg-video">
+    <source src="arkaplan.mp4" type="video/mp4">
+  </video>
+  <!-- Müzik -->
+  <audio id="bg-music" loop>
+    <source src="sarki.mp3" type="audio/mpeg">
+  </audio>
+  <div id="main-content">
+    <div id="title">Helin</div>
+    <div id="subtitle">- Seni Seviyorum</div>
+  </div>
+  <!-- Kalp Buton -->
+  <button id="heart-btn" title="Tıkla!">
+    <span class="heart-shape">
+      <svg viewBox="0 0 32 29.6" width="100%" height="100%">
+        <path d="M23.6,2.6c-2.6,0-5,1.7-6.1,4.2C16.1,4.3,13.7,2.6,11.1,2.6
+        C6,2.6,2,6.7,2,11.8c0,7.1,13.4,15.2,14.3,15.7c0.4,0.2,0.9,0.2,1.3,0
+        c0.9-0.5,14.3-8.6,14.3-15.7C30,6.7,26,2.6,23.6,2.6z"
+        fill="#ff69b4" stroke="#fff" stroke-width="2"/>
+      </svg>
+    </span>
+  </button>
+  <div id="love-message">Seviyorum Seni</div>
+  <script>
+    // Müzik otomatik başlat
+    document.body.addEventListener('click', () => {
+      document.getElementById('bg-music').play();
+    }, {once:true});
+    // Kar efekti
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      snowflake.textContent = '❄';
+      snowflake.style.left = Math.random() * 100 + 'vw';
+      snowflake.style.fontSize = Math.random() * 10 + 10 + 'px';
+      snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's';
+      document.body.appendChild(snowflake);
+      setTimeout(() => snowflake.remove(), 10000);
+    }
+    setInterval(createSnowflake, 300);
+    // Kalpler - daha fazla
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.textContent = '❤';
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.fontSize = (Math.random() * 12 + 22) + 'px';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }
+    setInterval(createHeart, 700);
+    // Glow efektli papatya SVG
+    function getDaisySVG() {
+      return `
+      <svg viewBox="0 0 32 32" width="100%" height="100%">
+        <circle cx="16" cy="16" r="6" fill="#fffacd" stroke="#ff69b4" stroke-width="2" filter="url(#glow)"/>
+        <g>
+          <ellipse cx="16" cy="6" rx="4" ry="1.2" fill="#fff" stroke="#ff69b4" stroke-width="0.6"/>
+          <ellipse cx="16" cy="26" rx="4" ry="1.2" fill="#fff" stroke="#ff69b4" stroke-width="0.6"/>
+          <ellipse cx="6" cy="16" rx="1.2" ry="4" fill="#fff" stroke="#ff69b4" stroke-width="0.6"/>
+          <ellipse cx="26" cy="16" rx="1.2" ry="4" fill="#fff" stroke="#ff69b4" stroke-width="0.6"/>
+          <ellipse cx="8" cy="8" rx="1" ry="3" fill="#fff" stroke="#ff69b4" stroke-width="0.4"/>
+          <ellipse cx="24" cy="8" rx="1" ry="3" fill="#fff" stroke="#ff69b4" stroke-width="0.4"/>
+          <ellipse cx="8" cy="24" rx="1" ry="3" fill="#fff" stroke="#ff69b4" stroke-width="0.4"/>
+          <ellipse cx="24" cy="24" rx="1" ry="3" fill="#fff" stroke="#ff69b4" stroke-width="0.4"/>
+        </g>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+          <feMerge>
+            <feMergeNode in="coloredBlur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </svg>
+      `;
+    }
+    // Papatya patlatma fonksiyonu
+    function explodeDaisies(x, y) {
+      const daisyCount = 10;
+      for (let i = 0; i < daisyCount; i++) {
+        const daisy = document.createElement('div');
+        daisy.classList.add('daisy');
+        daisy.innerHTML = getDaisySVG();
+        const angle = (2 * Math.PI / daisyCount) * i + Math.random() * 0.3;
+        const dx = Math.cos(angle) * (55 + Math.random() * 20);
+        const dy = Math.sin(angle) * (55 + Math.random() * 15);
+        daisy.style.left = (x - 18 + dx) + 'px';
+        daisy.style.top = (y - 18 + dy) + 'px';
+        document.body.appendChild(daisy);
+        setTimeout(() => daisy.remove(), 1400);
+      }
+    }
+    // Seviyorum Seni animasyonu fonksiyonu
+    function showLoveMessage() {
+      const msg = document.getElementById('love-message');
+      msg.classList.add('show-love');
+      setTimeout(() => msg.classList.remove('show-love'), 2600);
+    }
+    // Buton olayları
+    const heartBtn = document.getElementById('heart-btn');
+    heartBtn.addEventListener('click', function(e) {
+      const rect = heartBtn.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      explodeDaisies(x, y);
+      showLoveMessage();
+    });
+    heartBtn.addEventListener('touchstart', function(e) {
+      const rect = heartBtn.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      explodeDaisies(x, y);
+      showLoveMessage();
+    });
+  </script>
+</body>
+</html>
